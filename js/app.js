@@ -2,13 +2,15 @@ import { colorMap } from './config.js';
 import { state, loadState, saveState, getCurrentPlayers, resetCurrentRound, resetAllRounds } from './state.js';
 import { clearCache } from './storage.js';
 import { 
-    vibrate, renderGrid, updateModeBar, updateRoundButtons, updateControlButtons,
-    openModal, closeModal, renderTagManager, renderRecordModal, switchTab
+    vibrate, renderGrid, updateModeBar, updateRoundDisplay, updateControlButtons,
+    openModal, closeModal, renderTagManager, renderRecordModal, switchTab,
+    toggleRoundPanel, closeRoundPanel
 } from './ui.js';
 
 function init() {
     loadState();
     document.getElementById('mapSelect').value = state.selectedMap;
+    document.getElementById('playerCountSelect').value = state.playerCount;
     render();
     bindEvents();
 }
@@ -16,7 +18,7 @@ function init() {
 function render() {
     renderGrid(handleCellClick);
     updateModeBar();
-    updateRoundButtons();
+    updateRoundDisplay();
     updateControlButtons();
 }
 
@@ -27,13 +29,28 @@ function bindEvents() {
         saveState();
     });
 
-    // 轮次切换
-    document.querySelectorAll('.round-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+    // 人数选择
+    document.getElementById('playerCountSelect').addEventListener('change', (e) => {
+        vibrate(10);
+        state.playerCount = parseInt(e.target.value);
+        saveState();
+        render();
+    });
+
+    // 轮次触发器
+    document.getElementById('roundTrigger').addEventListener('click', () => {
+        vibrate(10);
+        toggleRoundPanel();
+    });
+
+    // 轮次选择
+    document.querySelectorAll('.round-option').forEach(opt => {
+        opt.addEventListener('click', () => {
             vibrate(10);
-            state.currentRound = parseInt(btn.dataset.round);
+            state.currentRound = parseInt(opt.dataset.round);
             state.currentMode = 'normal';
             state.tempId = null;
+            closeRoundPanel();
             render();
             saveState();
         });
