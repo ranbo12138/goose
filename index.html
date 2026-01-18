@@ -13,20 +13,33 @@
 </head>
 <body>
     <div class="top-bar">
-        <select id="mapSelect">
-            <option value="base">地下室</option>
-            <option value="church">鹅教堂</option>
-            <option value="ship">飞船</option>
-            <option value="jungle">丛林</option>
-        </select>
-        <div class="round-switcher">
-            <div class="round-btn active" data-round="1">1</div>
-            <div class="round-btn" data-round="2">2</div>
-            <div class="round-btn" data-round="3">3</div>
-            <div class="round-btn" data-round="4">4</div>
-            <div class="round-btn" data-round="5">5</div>
+        <div class="select-group">
+            <select id="mapSelect">
+                <option value="base">地下室</option>
+                <option value="church">鹅教堂</option>
+                <option value="ship">飞船</option>
+                <option value="jungle">丛林</option>
+            </select>
+            <select id="playerCountSelect">
+                <option value="15">15人</option>
+                <option value="13">13人</option>
+                <option value="8">8人</option>
+            </select>
         </div>
+        
+        <button class="round-trigger" id="roundTrigger">
+            第 1 轮 ▼
+        </button>
+
         <div class="settings-btn" id="settingsBtn">⚙️</div>
+    </div>
+
+    <div class="round-panel" id="roundPanel">
+        <div class="round-option active" data-round="1">1</div>
+        <div class="round-option" data-round="2">2</div>
+        <div class="round-option" data-round="3">3</div>
+        <div class="round-option" data-round="4">4</div>
+        <div class="round-option" data-round="5">5</div>
     </div>
 
     <div id="modeBar" class="mode-bar"></div>
