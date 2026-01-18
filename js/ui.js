@@ -7,8 +7,13 @@ export function vibrate(ms) {
 
 export function renderGrid(onCellClick) {
     const grid = document.getElementById('grid');
-    const players = getCurrentPlayers();
+    const allPlayers = getCurrentPlayers();
+    const players = allPlayers.slice(0, state.playerCount);  // 只取前N个
     const fragment = document.createDocumentFragment();
+
+    // 更新网格布局类
+    grid.className = 'grid-container';
+    grid.classList.add(`mode-${state.playerCount}`);
 
     players.forEach(p => {
         const cell = document.createElement('div');
@@ -16,7 +21,7 @@ export function renderGrid(onCellClick) {
         cell.onclick = () => onCellClick(p.id);
         
         const c = colorMap[p.id - 1];
-        const displayTags = buildDisplayTags(p, players);
+        const displayTags = buildDisplayTags(p, allPlayers);
         const tagsHtml = displayTags.map(t => 
             `<span class="mini-tag" style="${t.style}">${t.text}</span>`
         ).join('');
@@ -95,9 +100,10 @@ export function updateModeBar() {
     }
 }
 
-export function updateRoundButtons() {
-    document.querySelectorAll('.round-btn').forEach((btn, idx) => {
-        btn.classList.toggle('active', idx + 1 === state.currentRound);
+export function updateRoundDisplay() {
+    document.getElementById('roundTrigger').innerHTML = `第 ${state.currentRound} 轮 ▼`;
+    document.querySelectorAll('.round-option').forEach((opt, idx) => {
+        opt.classList.toggle('active', idx + 1 === state.currentRound);
     });
 }
 
@@ -107,6 +113,14 @@ export function updateControlButtons() {
         const map = {'report':'btn-report', 'vouch':'btn-vouch', 'knife':'btn-knife', 'walk':'btn-walk'};
         document.getElementById(map[state.currentMode])?.classList.add('active');
     }
+}
+
+export function toggleRoundPanel() {
+    document.getElementById('roundPanel').classList.toggle('open');
+}
+
+export function closeRoundPanel() {
+    document.getElementById('roundPanel').classList.remove('open');
 }
 
 export function openModal(id) {
