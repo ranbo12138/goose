@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🪿鹅鸭杀助手🦆</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#212121">
+</head>
+<body>
+    <div class="top-bar">
+        <select id="mapSelect">
+            <option value="base">地下室</option>
+            <option value="church">鹅教堂</option>
+            <option value="ship">飞船</option>
+            <option value="jungle">丛林</option>
+        </select>
+        <div class="round-switcher">
+            <div class="round-btn active" data-round="1">1</div>
+            <div class="round-btn" data-round="2">2</div>
+            <div class="round-btn" data-round="3">3</div>
+            <div class="round-btn" data-round="4">4</div>
+            <div class="round-btn" data-round="5">5</div>
+        </div>
+        <div class="settings-btn" id="settingsBtn">⚙️</div>
+    </div>
+
+    <div id="modeBar" class="mode-bar"></div>
+    <div class="grid-container" id="grid"></div>
+
+    <div class="bottom-ctrl">
+        <button class="ctrl-btn" style="color:#9c27b0" id="btn-report">🦶</button>
+        <button class="ctrl-btn" style="color:#2e7d32" id="btn-vouch">🛡️</button>
+        <button class="ctrl-btn" style="color:#c62828" id="btn-knife">🔪</button>
+        <button class="ctrl-btn" style="color:#1565c0" id="btn-walk">👫</button>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="sheet">
+            <div class="settings-title">设置</div>
+            <button class="settings-btn-item btn-tag-mgr" id="tagMgrBtn">🏷️ 自定义行为标签</button>
+            <button class="settings-btn-item btn-reset-round" id="resetRoundBtn">🗑️ 清空本轮记录</button>
+            <button class="settings-btn-item btn-new-game" id="newGameBtn">🆕 开启新局 (清空所有)</button>
+            <button class="settings-btn-item btn-clear-cache" id="clearCacheBtn">🧹 强制清理缓存</button>
+            <div class="footer-sign">Designer by Mula Sakee</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="tagMgrModal">
+        <div class="sheet">
+            <div class="settings-title">🏷️ 管理标签</div>
+            <div class="tag-list-editor" id="customTagList"></div>
+            <div style="border-top:1px solid #444; margin:10px 0;"></div>
+            <div class="add-tag-row">
+                <input type="text" id="newTagName" class="add-input" placeholder="新标签名">
+                <select id="newTagColor" class="color-select">
+                    <option value="wolf">🔴 红</option>
+                    <option value="good">🟢 绿</option>
+                    <option value="warn">🟠 橙</option>
+                    <option value="neutral">⚪ 灰</option>
+                    <option value="blue">🔵 蓝</option>
+                    <option value="purple">🟣 紫</option>
+                </select>
+                <button class="add-btn" id="addTagBtn">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="recordModal">
+        <div class="sheet">
+            <div style="text-align:center; color:#888; margin-bottom:12px; font-size:12px;">
+                <span style="color:#29b6f6">R<span id="displayRound">1</span></span> &mdash; #<span id="recordTitleId" style="font-weight:bold; color:white;"></span>
+            </div>
+            <div class="tab-header">
+                <div class="tab-item active" data-tab="loc">📍 地点</div>
+                <div class="tab-item" data-tab="act">🏃 行为</div>
+            </div>
+            <div class="tab-content show" id="tab-loc"></div>
+            <div class="tab-content" id="tab-act"></div>
+        </div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(()=>console.log('SW OK')).catch(e=>console.log(e));
+        }
+    </script>
+    <script type="module" src="./js/app.js"></script>
+</body>
+</html>
