@@ -8,7 +8,8 @@ export const state = {
     editingId: null,
     roundsData: {},
     activeTags: [],
-    selectedMap: 'base'
+    selectedMap: 'base',
+    playerCount: 15  // 新增
 };
 
 export function initPlayers() {
@@ -26,6 +27,7 @@ export function initState() {
         4: initPlayers(), 5: initPlayers()
     };
     state.activeTags = [...defaultActTags];
+    state.playerCount = 15;
 }
 
 export function loadState() {
@@ -35,6 +37,7 @@ export function loadState() {
         state.currentRound = data.curRound;
         state.selectedMap = data.map || 'base';
         state.activeTags = data.activeTags?.length > 0 ? data.activeTags : [...defaultActTags];
+        state.playerCount = data.playerCount || 15;  // 新增
     } else {
         initState();
     }
@@ -45,7 +48,8 @@ export function saveState() {
         rounds: state.roundsData,
         curRound: state.currentRound,
         map: state.selectedMap,
-        activeTags: state.activeTags
+        activeTags: state.activeTags,
+        playerCount: state.playerCount  // 新增
     });
 }
 
