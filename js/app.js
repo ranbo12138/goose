@@ -79,6 +79,12 @@ function bindEvents() {
         renderTagManager();
     });
 
+    // 关于作者按钮
+    document.getElementById('aboutBtn').addEventListener('click', () => {
+        closeModal();
+        openModal('aboutModal');
+    });
+
     // 标签管理
     document.getElementById('addTagBtn').addEventListener('click', () => {
         const name = document.getElementById('newTagName').value.trim();
